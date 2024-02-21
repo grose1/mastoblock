@@ -1,8 +1,5 @@
 name: run get_list.py
 
-on:
-  schedule:
-    - cron: '13 16 * * *' # At 00:00 on Monday
 
 jobs:
   build:
