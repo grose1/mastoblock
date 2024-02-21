@@ -2,7 +2,7 @@ name: run get_list.py
 
 on:
   schedule:
-    - cron: '9 16 * * *' # At 00:00 on Monday
+    - cron: '13 16 * * *' # At 00:00 on Monday
 
 jobs:
   build:
