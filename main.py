@@ -34,5 +34,6 @@ with open('data.json') as data_file:
             print(domain, title, version)
         except:
             pass
+conn.close()
 
 
