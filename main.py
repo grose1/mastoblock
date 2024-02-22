@@ -23,7 +23,7 @@ with open('data.json') as data_file:
     for item in data:
         inst = "https://" + item + "/api/v2/instance"
         try:
-            response2 = requests.request("GET", inst, headers=headers, data=payload)
+            response2 = requests.request("GET", inst, headers=headers, data=payload, timeout=10) # 10 sec
             #print(response2.json())
             data2 = response2.json()
             domain = data2['domain']
