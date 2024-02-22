@@ -1,6 +1,17 @@
 import requests
 import json
 import sqlite3
+from configparser import ConfigParser
+
+
+
+# Read env file
+config_object = ConfigParser()
+config_object.read(".env")
+serverenv = config_object['SERVER']
+server = serverenv['server_url']
+
+
 # Connecting to sqlite
 conn = sqlite3.connect('Sqlite3.db')
 
@@ -8,7 +19,7 @@ conn = sqlite3.connect('Sqlite3.db')
 # cursor() method
 cursor = conn.cursor()
 
-url = "https://{'instance_url'}/api/v1/instance/peers"
+url = "https://{}/api/v1/instance/peers".format(server)
 
 payload = {}
 headers = {}
