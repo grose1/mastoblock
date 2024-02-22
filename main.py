@@ -31,7 +31,7 @@ with open('data.json') as data_file:
         print('[%d / %d] Looking up %s ...' % (count, total_count, item))
         inst = "https://" + item + "/api/v2/instance"
         try:
-            response2 = requests.request("GET", inst, headers=headers, data=payload)
+            response2 = requests.request("GET", inst, headers=headers, data=payload, timeout=10) # 10 sec
             #print(response2.json())
             data2 = response2.json()
             domain = data2['domain']
