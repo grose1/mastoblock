@@ -20,7 +20,15 @@ with open('data.json', 'w') as f:
     json.dump(data, f)
 with open('data.json') as data_file:
     data = json.load(data_file)
-    for item in data:
+    total_count = len(data)
+    for count, item in enumerate(data, start=1):
+
+        # already in database?
+        res = conn.execute('SELECT domain FROM Instances WHERE domain="%s"' % (item))
+        if res.fetchone(): # already in system
+            continue
+
+        print('[%d / %d] Looking up %s ...' % (count, total_count, item))
         inst = "https://" + item + "/api/v2/instance"
         try:
             response2 = requests.request("GET", inst, headers=headers, data=payload)
