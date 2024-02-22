@@ -23,7 +23,8 @@ cursor_obj.execute("DROP TABLE IF EXISTS Sqlite3")
 table = """ CREATE TABLE Instances (
             Domain VARCHAR(255),
             Title VARCHAR(255),
-            Version VARCHAR(255)
+            Version VARCHAR(255),
+            BL_ID VARCHAR(255)
         ); """
 
 cursor_obj.execute(table)
