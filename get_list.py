@@ -1,6 +1,9 @@
 import requests
 import json
 
+# this gets a list of instances and software version from the fediverse.observer api 
+
+
 url = "https://api.fediverse.observer/"
 
 payload = json.dumps({
