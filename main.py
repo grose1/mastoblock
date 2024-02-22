@@ -8,7 +8,7 @@ conn = sqlite3.connect('Sqlite3.db')
 # cursor() method
 cursor = conn.cursor()
 
-url = "https://{your_instance_url}/api/v1/instance/peers"
+url = "https://cheeseburger.social/api/v1/instance/peers"
 
 payload = {}
 headers = {}
@@ -25,7 +25,9 @@ with open('data.json') as data_file:
 
         # already in database?
         res = conn.execute('SELECT domain FROM Instances WHERE domain="%s"' % (item))
-        if res.fetchone(): # already in system
+        if res.fetchone():
+            continue # already in system
+        if 'activitypub-troll.cf' in item: # skipping activitypub-troll.cf from being included from lookup as its already blocked from my instance and takes up a large about of the json file
             continue
 
         print('[%d / %d] Looking up %s ...' % (count, total_count, item))
@@ -37,9 +39,16 @@ with open('data.json') as data_file:
             domain = data2['domain']
             title = data2['title']
             version = data2['version']
-            cursor.execute('INSERT INTO Instances (Domain, Title, Version) values (?, ?, ?)', (domain, title, version))
-            conn.commit()
-            print(domain, title, version)
+            if 'compatible' in version: # Skips over Pleroma, Friendica and other software that responds to the Mastodon API
+                continue
+            if 'pixelfed' in domain: # Skips over Pixelfed responses in domain name
+                continue
+            if 'Pixelfed' in title: # Skips over Pixelfed responses in title
+                continue
+            else:
+                cursor.execute('INSERT INTO Instances (Domain, Title, Version) values (?, ?, ?)', (domain, title, version))
+                conn.commit()
+                print(domain, title, version)
         except:
             pass
 conn.close()
