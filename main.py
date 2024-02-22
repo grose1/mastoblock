@@ -8,7 +8,7 @@ conn = sqlite3.connect('Sqlite3.db')
 # cursor() method
 cursor = conn.cursor()
 
-url = "https://cheeseburger.social/api/v1/instance/peers"
+url = "https://{'your_instance'}/api/v1/instance/peers"
 
 payload = {}
 headers = {}
