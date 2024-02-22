@@ -8,7 +8,7 @@ conn = sqlite3.connect('Sqlite3.db')
 # cursor() method
 cursor = conn.cursor()
 
-url = "https://{'your_instance'}/api/v1/instance/peers"
+url = "https://{'instance_url'}/api/v1/instance/peers"
 
 payload = {}
 headers = {}
@@ -39,6 +39,7 @@ with open('data.json') as data_file:
             domain = data2['domain']
             title = data2['title']
             version = data2['version']
+            version2 = version[:5] # removes trailing info after version number
             if 'compatible' in version: # Skips over Pleroma, Friendica and other software that responds to the Mastodon API
                 continue
             if 'pixelfed' in domain: # Skips over Pixelfed responses in domain name
@@ -46,9 +47,9 @@ with open('data.json') as data_file:
             if 'Pixelfed' in title: # Skips over Pixelfed responses in title
                 continue
             else:
-                cursor.execute('INSERT INTO Instances (Domain, Title, Version) values (?, ?, ?)', (domain, title, version))
+                cursor.execute('INSERT INTO Instances (Domain, Title, Version) values (?, ?, ?)', (domain, title, version2))
                 conn.commit()
-                print(domain, title, version)
+                print(domain, title, version2)
         except:
             pass
 conn.close()
